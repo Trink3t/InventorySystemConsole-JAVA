@@ -5,12 +5,20 @@ import java.util.List;
 public class Inventory {
     private List<Item> items = new ArrayList<>();
 
+    /**
+     * Prints out all items in the inventory.
+     */
     public void listItems() {
         for (Item item : items) {
             System.out.println(item);
         }
     }
 
+    /**
+     * Prints out all items in the inventory of the given type.
+     * 
+     * @param type the type of item to print
+     */
     public void listItemsByType(ItemType type) {
         for (Item item : items) {
             if (type.equals(ItemType.PRODUCT) && item instanceof Product) {
@@ -23,6 +31,12 @@ public class Inventory {
         }
     }
 
+    /**
+     * Adds an item to the inventory.
+     * 
+     * @param item the item to add
+     * @throws IllegalArgumentException if the item has a duplicate ID
+     */
     public void addItem(Item item) {
         if (hasDuplicateID(item.getID())) {
             throw new IllegalArgumentException("Duplicate ID detected: " + item.getID());
@@ -32,6 +46,13 @@ public class Inventory {
     }
 
 
+    /**
+     * Retrieves an item from the inventory by its ID.
+     * 
+     * @param ID the ID of the item to retrieve
+     * @return the item with the given ID, or null if no such item exists
+     * @throws IllegalArgumentException if no item with the given ID exists
+     */
     public Item getItem(int ID) {
         for (Item item : items) {
             if (item.getID() == ID) {
@@ -41,10 +62,21 @@ public class Inventory {
         throw new IllegalArgumentException("Item not found!");
     }
 
+    /**
+     * Retrieves a list of all items in the inventory.
+     * 
+     * @return a list of all items in the inventory
+     */
     public List<Item> getItems() {
         return items;
     }
 
+    /**
+     * Checks if an item with the given ID already exists in the inventory.
+     * 
+     * @param ID the ID of the item to check
+     * @return true if an item with the given ID already exists, false otherwise
+     */
     private boolean hasDuplicateID(int ID) {
         for (Item item : items) {
             if (item.getID() == ID) {
@@ -54,6 +86,13 @@ public class Inventory {
         return false;
     }
 
+    /**
+     * Updates an item in the inventory.
+     * 
+     * @param ID the ID of the item to update
+     * @param item the new item to replace the old one
+     * @throws IllegalArgumentException if no item with the given ID exists
+     */
     public void updateItem(int ID, Item item) {
 
         boolean updated = false;
@@ -70,6 +109,12 @@ public class Inventory {
         }
     }
     
+    /**
+     * Removes an item from the inventory by its ID.
+     * 
+     * @param ID the ID of the item to remove
+     * @throws IllegalArgumentException if no item with the given ID exists
+     */
     public void removeItem(int ID) {
         boolean removed = items.removeIf(item -> item.getID() == ID);
         if (!removed) {

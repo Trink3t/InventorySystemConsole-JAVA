@@ -10,6 +10,12 @@ public class ProductBuilder extends ItemBuilder<Product, ProductBuilder> {
         this.item = product;
     }
 
+    /**
+     * Sets the name of the product.
+     * 
+     * @param name the new name of the product
+     * @return this builder
+     */
     @Override
     public ProductBuilder setName(String name) {
         validateField("Name", name);
@@ -17,6 +23,13 @@ public class ProductBuilder extends ItemBuilder<Product, ProductBuilder> {
         return this;
     }
 
+
+    /**
+     * Sets the description of the product.
+     * 
+     * @param description the new description of the product
+     * @return this builder
+     */
     @Override
     public ProductBuilder setDescription(String description) {
         validateField("Description", description);
@@ -24,19 +37,40 @@ public class ProductBuilder extends ItemBuilder<Product, ProductBuilder> {
         return this;
     }
 
+    /**
+     * Sets the price of the product.
+     * 
+     * @param price the new price of the product
+     * @return this builder
+     * @throws IllegalArgumentException if the price is negative
+     */
     public ProductBuilder setPrice(double price) {
-        if (price < 0) throw new IllegalArgumentException("Price cannot be negative");
+        validateField("Price", item);
         item.setPrice(price);
         return this;
     }
 
+    /**
+     * Sets the quantity of the product.
+     * 
+     * @param quantity the new quantity of the product
+     * @return this builder
+     * @throws IllegalArgumentException if the quantity is negative
+     */
     public ProductBuilder setQuantity(int quantity) {
-        if (quantity < 0) throw new IllegalArgumentException("Quantity cannot be negative");
-        if (quantity % 1 != 0) throw new IllegalArgumentException("Quantity must be an integer");
+        validateField("Quantity", item);
         item.setQuantity(quantity);
         return this;
     }
 
+    /**
+     * Validates a field in the product builder.
+     * 
+     * @param fieldName the name of the field to validate
+     * @param value the value of the field to validate
+     * 
+     * @throws IllegalArgumentException if the field is invalid
+     */
     @Override
     protected void validateField(String fieldName, Object value) {
         super.validateField(fieldName, value);

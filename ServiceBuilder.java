@@ -10,6 +10,13 @@ public class ServiceBuilder extends ItemBuilder<Service, ServiceBuilder>{
         this.item = service;
     }
 
+    /**
+     * Sets the name of the service.
+     * 
+     * @param name the new name of the service
+     * @return this builder
+     * @throws IllegalArgumentException if the name is null or empty
+     */
     @Override
     public ServiceBuilder setName(String name) {
         validateField("Name", name);
@@ -17,6 +24,12 @@ public class ServiceBuilder extends ItemBuilder<Service, ServiceBuilder>{
         return this;
     }
 
+    /**
+     * Sets the description of the service.
+     * 
+     * @param description the new description of the service
+     * @return this builder
+     */
     @Override
     public ServiceBuilder setDescription(String description) {
         validateField("Description", this);
@@ -24,12 +37,27 @@ public class ServiceBuilder extends ItemBuilder<Service, ServiceBuilder>{
         return this;
     }
 
+    /**
+     * Sets the rate of the service.
+     * 
+     * @param rate the new rate of the service
+     * @return this builder
+     * @throws IllegalArgumentException if the rate is negative
+     */
     public ServiceBuilder setRate(double rate) {
         validateField("Rate", rate);
         item.setRate(rate);
         return this;
     }
 
+    /**
+     * Validates a field in the service builder.
+     * 
+     * @param fieldName the name of the field to validate
+     * @param value the value of the field to validate
+     * 
+     * @throws IllegalArgumentException if the field is invalid
+     */
     @Override
     protected final void validateField(String fieldName, Object value) {
         super.validateField(fieldName, value);
