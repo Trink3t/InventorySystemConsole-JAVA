@@ -51,7 +51,6 @@ public class Service extends Item{
                 getName(),
                 getDescription(),
                 getRate(),
-                calculateValue(),
                 toReadableDateTime(getCreatedAt()),
                 toReadableDateTime(getUpdatedAt())
         );
