@@ -1,7 +1,7 @@
 public class Service extends Item{
     private double rate;
 
-    public Service(int ID, String name, String description, int par, int par1) {
+    public Service(int ID, String name, String description, double rate) {
         super(ID, name, description);
         setRate(rate);
     }

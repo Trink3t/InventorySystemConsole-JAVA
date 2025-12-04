@@ -62,7 +62,7 @@ public class Product extends Item {
     @Override
     public String toString() {
         return String.format("""
-                [PRODUCT]
+                \n[PRODUCT]
                 ID: %d
                 Name: %s
                 Description: %s

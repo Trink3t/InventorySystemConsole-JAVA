@@ -2,7 +2,7 @@ public class ServiceBuilder extends ItemBuilder<Service, ServiceBuilder>{
 
     public ServiceBuilder(int ID) {
         validateField("ID", ID);
-        this.item = new Service(ID, "", "", 0, 0);
+        this.item = new Service(ID, "", "", 0);
     }
 
     public ServiceBuilder(Service service) {
