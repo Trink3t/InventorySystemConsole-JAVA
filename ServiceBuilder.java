@@ -32,7 +32,7 @@ public class ServiceBuilder extends ItemBuilder<Service, ServiceBuilder>{
      */
     @Override
     public ServiceBuilder setDescription(String description) {
-        validateField("Description", this);
+        validateField("Description", description);
         item.setDescription(description);
         return this;
     }

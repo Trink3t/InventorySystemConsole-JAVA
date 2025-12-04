@@ -45,7 +45,7 @@ public class ProductBuilder extends ItemBuilder<Product, ProductBuilder> {
      * @throws IllegalArgumentException if the price is negative
      */
     public ProductBuilder setPrice(double price) {
-        validateField("Price", item);
+        validateField("Price", price);
         item.setPrice(price);
         return this;
     }
@@ -58,7 +58,7 @@ public class ProductBuilder extends ItemBuilder<Product, ProductBuilder> {
      * @throws IllegalArgumentException if the quantity is negative
      */
     public ProductBuilder setQuantity(int quantity) {
-        validateField("Quantity", item);
+        validateField("Quantity", quantity);
         item.setQuantity(quantity);
         return this;
     }
@@ -82,7 +82,7 @@ public class ProductBuilder extends ItemBuilder<Product, ProductBuilder> {
                 if (d < 0) throw new IllegalArgumentException("Price cannot be negative");
             }
             case "Quantity" -> {
-                if (!(value instanceof Number)) throw new IllegalArgumentException("Quantity must be a number");
+                if (!(value instanceof Integer)) throw new IllegalArgumentException("Quantity must be a number");
                 double d = ((Number) value).doubleValue();
                 if (d < 0) throw new IllegalArgumentException("Quantity cannot be negative");
                 if (d % 1 != 0) throw new IllegalArgumentException("Quantity must be an integer");
