@@ -1,7 +1,7 @@
 import java.util.List;
 
 public class Dashboard {
-    private List<Item> items;
+    private final List<Item> items;
 
     public Dashboard (List<Item> items) {
         this.items = items;

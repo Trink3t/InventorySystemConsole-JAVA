@@ -72,7 +72,7 @@ public class ProductBuilder extends ItemBuilder<Product, ProductBuilder> {
      * @throws IllegalArgumentException if the field is invalid
      */
     @Override
-    protected void validateField(String fieldName, Object value) {
+    protected final void validateField(String fieldName, Object value) {
         super.validateField(fieldName, value);
 
         switch (fieldName) {

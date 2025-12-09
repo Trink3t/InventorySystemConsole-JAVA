@@ -1,6 +1,9 @@
 
+import java.io.IOException;
+
+
 public class Main {
-    private static Inventory inventory = new Inventory();
+    private static final Inventory inventory = new Inventory();
     public static void main(String[] args) {
         while (true) {
             showMainpage();
@@ -16,6 +19,7 @@ public class Main {
     }
 
     public static void showMainpage() {
+        clearScreen();
         Dashboard dashboard = new Dashboard(inventory.getItems());
 
         System.out.println("=== INVENTORY SYSTEM ===");
@@ -39,6 +43,7 @@ public class Main {
     }
 
     public static void viewItems() {
+        clearScreen();
         while (true) {
             inventory.listItems();
 
@@ -61,6 +66,8 @@ public class Main {
     }
 
     public static void viewItem() {
+        clearScreen();
+        System.out.println("VIEW ITEM");
         while (true) {
             int item_ID = InputHelper.readRequiredInt("Enter Item ID: ");
 
@@ -93,40 +100,44 @@ public class Main {
     }
 
     public static void updateItem(Item item) {
+        clearScreen();
+        System.out.println("UPDATE ITEM");
         String name = InputHelper.readOptionalString("Set Name (" + item.getName() + "): ", item.getName());
         String description = InputHelper.readOptionalString("Set Description (" + item.getDescription() + "): ", item.getDescription());
 
-        if (item instanceof Product p) {
+        switch (item) {
+            case Product p -> {
+                double price = InputHelper.readOptionalDouble("Set Price (" + p.getPrice() + "): ", p.getPrice());
+                int quantity = InputHelper.readOptionalInt("Set Quantity (" + p.getQuantity() + "): ", p.getQuantity());
 
-            double price = InputHelper.readOptionalDouble("Set Price (" + p.getPrice() + "): ", p.getPrice());
-            int quantity = InputHelper.readOptionalInt("Set Quantity (" + p.getQuantity() + "): ", p.getQuantity());
+                Product updatedProduct = new ProductBuilder(p)
+                        .setName(name)
+                        .setDescription(description)
+                        .setPrice(price)
+                        .setQuantity(quantity)
+                        .build();
 
-            Product updatedProduct = new ProductBuilder(p)
-                    .setName(name)
-                    .setDescription(description)
-                    .setPrice(price)
-                    .setQuantity(quantity)
-                    .build();
+                inventory.updateItem(p.getID(), updatedProduct);
+            }
+            case Service s -> {
+                double rate = InputHelper.readOptionalDouble("Set Rate (" + s.getRate() + "): ", s.getRate());
 
-            inventory.updateItem(p.getID(), updatedProduct);
+                Service updatedService = new ServiceBuilder(s)
+                        .setName(name)
+                        .setDescription(description)
+                        .setRate(rate)
+                        .build();
 
-        } else if (item instanceof Service s) {
-
-            double rate = InputHelper.readOptionalDouble("Set Rate (" + s.getRate() + "): ", s.getRate());
-
-            Service updatedService = new ServiceBuilder(s)
-                    .setName(name)
-                    .setDescription(description)
-                    .setRate(rate)
-                    .build();
-
-            inventory.updateItem(s.getID(), updatedService);
+                inventory.updateItem(s.getID(), updatedService);
+            }
+            default -> {}
         }
 
         System.out.println("Item updated successfully!");
     }
 
     public static void addItem() {
+        clearScreen();
         System.out.println("ADD ITEM");
 
         String name = InputHelper.readRequiredString("Set Name: ");
@@ -179,6 +190,7 @@ public class Main {
     }
 
     public static void deleteItem() {
+        clearScreen();
         System.out.println("DELETE ITEM");
         int itemID = InputHelper.readRequiredInt("Enter Item ID: ");
 
@@ -189,4 +201,18 @@ public class Main {
             System.out.println(e.getMessage());
         }
     }
+
+    public static void clearScreen() {
+        try {
+            if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Unable to clear screen.");
+        }
+    }
+
 }

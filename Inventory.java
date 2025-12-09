@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Inventory {
-    private List<Item> items = new ArrayList<>();
+    private final List<Item> items = new ArrayList<>();
 
     /**
      * Prints out all items in the inventory.
