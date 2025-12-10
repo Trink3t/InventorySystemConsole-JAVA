@@ -1,6 +1,4 @@
-
 import java.io.IOException;
-
 
 public class Main {
     private static final Inventory inventory = new Inventory();
@@ -43,8 +41,8 @@ public class Main {
     }
 
     public static void viewItems() {
-        clearScreen();
         while (true) {
+            clearScreen();
             inventory.listItems();
 
             System.out.println("\nOptions:");
@@ -66,9 +64,9 @@ public class Main {
     }
 
     public static void viewItem() {
-        clearScreen();
-        System.out.println("VIEW ITEM");
         while (true) {
+            clearScreen();
+            System.out.println("VIEW ITEM");
             int item_ID = InputHelper.readRequiredInt("Enter Item ID: ");
 
             Item item;
@@ -90,7 +88,7 @@ public class Main {
             switch (num) {
                 case 1 -> updateItem(item);
                 case 2 -> {
-                    deleteItem();
+                    deleteItem(item.getID());
                     return;
                 }
                 case 0 -> { return; }
@@ -134,6 +132,7 @@ public class Main {
         }
 
         System.out.println("Item updated successfully!");
+
     }
 
     public static void addItem() {
@@ -189,17 +188,28 @@ public class Main {
         }
     }
 
-    public static void deleteItem() {
+    public static void deleteItem(int itemID) {
         clearScreen();
         System.out.println("DELETE ITEM");
-        int itemID = InputHelper.readRequiredInt("Enter Item ID: ");
+        String choice = InputHelper.readRequiredString("Are you sure you want to delete this item? (yes / no): ");
 
-        try {
-            inventory.removeItem(itemID);
-            System.out.println("Item Successfully removed!");
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
+        switch (choice.toLowerCase()) {
+            case "yes", "y" -> {
+                try {
+                    inventory.removeItem(itemID);
+                    System.out.println("Item Successfully removed!");
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            case "no", "n" -> {
+                System.out.println("Item deletion cancelled.");
+            }
+            default -> {
+                System.out.println("Invalid choice. Item deletion cancelled.");
+            }
+        }   
+        
     }
 
     public static void clearScreen() {

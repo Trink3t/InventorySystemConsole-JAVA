@@ -57,6 +57,7 @@ public abstract class ItemBuilder<T extends Item, B extends ItemBuilder<T,B>> {
      * @return the built item
      */
     public T build() {
+        item.setUpdatedAt(); 
         return item;
     }
 }
